@@ -1,4 +1,5 @@
 "Usage
+" - Install  vim-gtk3 or neovim instead of vim
 " https://mapan1984.github.io/tool/2016/04/10/Vim-%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7/
 
 ":%TOhtml - 转换为HTML文件
