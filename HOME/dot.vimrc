@@ -14,10 +14,12 @@
 "colorscheme evening
 "colorscheme industry
 colorscheme desert
+colorscheme peachpuff
 "set background=dark
 set background=light
 set background=dark
 
+set mouse=  "disable mouse
 set history=2000           " 设置历史记录条目数
 filetype on                " 启用文件类型检测
 filetype plugin on         " 启用插件加载
