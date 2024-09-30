@@ -103,20 +103,38 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$("${HOME}/anaconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "${HOME}/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "${HOME}/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="${HOME}/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+conda activate py3.8.10-iotedge
+
 set -o vi
 alias indent='clang-format -style="{BasedOnStyle: llvm, IndentWidth: 4, BreakBeforeBraces: Custom, BraceWrapping: {AfterClass: true, AfterStruct: true, AfterControlStatement: false, AfterFunction: true, BeforeElse: true}}"'
 #alias fd='fdfind --hidden  --no-ignore'
 alias fd='fdfind --hidden  --no-ignore'
-alias cursor='$HOME/Downloads/cursor-*-x86_64.AppImage --no-sandbox'
+alias cursor="$HOME/Downloads/cursor-*-x86_64.AppImage --no-sandbox"
 
 
 export XMODIFIERS=@im=fcitx5
 export GTK_IM_MODULE=fcitx5
 export QT_IM_MODULE=fcitx5
 
-export HOST_118=20.0.0.118
-export REMOTE_DEV_HOST=20.0.0.2
-export RSYNC=rsync
+#export HOST_118=20.0.0.118
+export HOST_118=10.0.110.118
+#export REMOTE_DEV_HOST=20.0.0.2
+#export RSYNC=rsync
 export DS63_BUILD_HOST=$HOST_118
 alias j='ssh buspas@10.0.110.6'
 alias 4g='ssh buspas@$HOST_118'
