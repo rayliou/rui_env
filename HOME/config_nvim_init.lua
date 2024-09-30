@@ -143,6 +143,13 @@ require("lazy").setup({
         vim.cmd([[colorscheme gruvbox]])
       end
     },
+    {
+      "justinmk/vim-sneak",
+      config = function()
+	vim.g['sneak#label'] = 1
+      end
+
+    },
   },
 
   -- 插件安装时使用的颜色主题
