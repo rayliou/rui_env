@@ -16,8 +16,8 @@
 colorscheme desert
 colorscheme peachpuff
 "set background=dark
-set background=light
 set background=dark
+set background=light
 
 set mouse=  "disable mouse
 set history=2000           " 设置历史记录条目数

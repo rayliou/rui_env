@@ -31,29 +31,75 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
   -- 插件列表
   spec = {
-    { "justinmk/vim-sneak", config = function() vim.g['sneak#label'] = 1 end },
-    {"morhetz/gruvbox", config = function() vim.cmd([[colorscheme gruvbox]]) end }, },
-    { "nvim-treesitter/nvim-treesitter",
-      opts = { ensure_installed = { "cpp","c", "python" , "cmake", "make", "bash",  } },
-    },
-    { "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" },  -- 延迟加载，文件读取或新文件创建时触发
-        config = function()
-          -- 配置 clangd
+        {"morhetz/gruvbox", config = function() vim.cmd([[colorscheme gruvbox]]) end }, 
+        {"justinmk/vim-sneak", config = function() vim.g['sneak#label'] = 1 end },
+        {
+          "nvim-treesitter/nvim-treesitter",
+          opts = { ensure_installed = { "cpp", "c", "python", "cmake", "make", "bash", "markdown", "markdown_inline" } },
+        },
+        {
+          "p00f/clangd_extensions.nvim",
+          lazy = true,
+          config = function() end,
+          opts = {
+            inlay_hints = {
+              inline = false,
+            },
+            ast = {
+              --These require codicons (https://github.com/microsoft/vscode-codicons)
+              role_icons = {
+                type = "",
+                declaration = "",
+                expression = "",
+                specifier = "",
+                statement = "",
+                ["template argument"] = "",
+              },
+              kind_icons = {
+                Compound = "",
+                Recovery = "",
+                TranslationUnit = "",
+                PackExpansion = "",
+                TemplateTypeParm = "",
+                TemplateTemplateParm = "",
+                TemplateParamObject = "",
+              },
+            },
+          },
+        },
+        {"neovim/nvim-lspconfig", config = function()
           require("lspconfig").clangd.setup({
-            -- 设置 clangd 使用 compile_commands.json 或 .git 根目录
-            root_dir = require("lspconfig.util").root_pattern("compile_commands.json", ".git"),
-            -- 其他可选配置
-            cmd = { "clangd", "--background-index", "--clang-tidy" },
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),  -- 可选，集成补全
+            cmd = {
+              "clangd",
+              "--background-index",
+              "--clang-tidy",
+              "--header-insertion=iwyu",
+              "--completion-style=detailed",
+              "--function-arg-placeholders",
+              "--fallback-style=llvm",
+            },
+            init_options = {
+              usePlaceholders = true,
+              completeUnimported = true,
+              clangdFileStatus = true,  
+            },
           })
-        end,
-      },
-
-    { "tpope/vim-fugitive", }, -- 其他插件可以在这里添加 例如：Git 插件
+        end,  
+        opts = {
+            server = {
+              clangd = {
+                keys = {
+                  { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
+                },
+              },
+            }, -- server
+          }, -- opts  
+        }, -- neovim/nvim-lspconfig
+    }, --spec
     
   install = { colorscheme = { "habamax" } }, -- 插件安装时使用的颜色主题
   checker = { enabled = true },              -- 自动检查插件更新
 })
 
 --colorscheme gruvbox
+vim.cmd([[colorscheme murphy]])
