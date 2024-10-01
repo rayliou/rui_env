@@ -104,7 +104,5 @@ require("lazy").setup({
 --colorscheme gruvbox
 vim.cmd([[colorscheme murphy]])
 
--- Set keymap for Alt+O to ClangdSwitchSourceHeader
---
 vim.api.nvim_set_keymap( "n", "<M-o>", "<cmd>ClangdSwitchSourceHeader<CR>", { noremap = true, silent = true })
 

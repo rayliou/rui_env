@@ -1,6 +1,4 @@
 Host *
- ForwardX11 yes
- ForwardX11Trusted yes
  SendEnv TERM
 
 Host h
@@ -8,16 +6,22 @@ Host h
   Port 2231
   User lxr
   Compression yes
+  ForwardX11 yes
+  ForwardX11Trusted yes
 
 Host o
   HostName 20.0.0.2
   User lxr
   Compression yes
+  ForwardX11 yes
+  ForwardX11Trusted yes
 
 Host 119
   HostName 192.168.0.119
   User henry
   Compression yes
+  ForwardX11 yes
+  ForwardX11Trusted yes
 
 
 Host 4g

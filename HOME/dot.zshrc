@@ -125,16 +125,20 @@ alias indent='clang-format -style="{BasedOnStyle: llvm, IndentWidth: 4, BreakBef
 #alias fd='fdfind --hidden  --no-ignore'
 alias fd='fdfind --hidden  --no-ignore'
 alias cursor="$HOME/Downloads/cursor-*-x86_64.AppImage --no-sandbox"
+alias bat='batcat'
 
 
 export XMODIFIERS=@im=fcitx5
 export GTK_IM_MODULE=fcitx5
 export QT_IM_MODULE=fcitx5
 
-#export HOST_118=20.0.0.118
-export HOST_118=10.0.110.118
-#export REMOTE_DEV_HOST=20.0.0.2
-#export RSYNC=rsync
+if ip route | grep -q 10.0.96.0; then
+    export HOST_118=10.0.110.118
+    export RSYNC=rsync
+else
+    export HOST_118=20.0.0.118
+    export RSYNC="rsync -e 'ssh -p2231'"
+fi
 export DS63_BUILD_HOST=$HOST_118
 alias j='ssh buspas@10.0.110.6'
 alias 4g='ssh buspas@$HOST_118'

@@ -6,8 +6,7 @@ all:ssh \
 	$(HOME)/.tmux.conf \
 	$(HOME)/.config/terminator/config
 
-ssh: $(HOME)/.ssh/authorized_keys \
-	$(HOME)/.ssh/config
+ssh: $(HOME)/.ssh/authorized_keys $(HOME)/.ssh/config
 
 $(HOME)/.vimrc:$(HOME)/g/rui_env/HOME/dot.vimrc 
 	rm -vf $@ && ln -sf  $< $@
