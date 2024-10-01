@@ -1,0 +1,26 @@
+Host *
+ ForwardX11 yes
+ ForwardX11Trusted yes
+ SendEnv TERM
+
+Host h
+  HostName h.liuxr.net
+  Port 2231
+  User lxr
+  Compression yes
+
+Host o
+  HostName 20.0.0.2
+  User lxr
+  Compression yes
+
+Host 119
+  HostName 192.168.0.119
+  User henry
+  Compression yes
+
+
+Host 4g
+  HostName 10.0.110.118
+  User buspas
+
