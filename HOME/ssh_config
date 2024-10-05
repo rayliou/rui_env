@@ -25,6 +25,6 @@ Host 119
 
 
 Host 4g
-  HostName 10.0.110.118
+  HostName host_118
   User buspas
 
