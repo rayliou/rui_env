@@ -133,11 +133,11 @@ export GTK_IM_MODULE=fcitx5
 export QT_IM_MODULE=fcitx5
 
 if ip route | grep -q 10.0.96.0; then # Office
-    export HOST_118=20.0.0.118
+    export HOST_118=10.0.110.118
     export RSYNC="rsync -e 'ssh -p2231'"
     export REMOTE_DEV_HOST=h.liuxr.net
 else # Home
-    export HOST_118=10.0.110.118
+    export HOST_118=20.0.0.118
     export RSYNC=rsync
     export REMOTE_DEV_HOST=20.0.0.2
 fi
