@@ -30,7 +30,7 @@ set shortmess+=atI          " 启动时不显示欢迎信息
 set nobackup                " 禁用备份文件
 set noswapfile              " 禁用交换文件
 set number                  " 显示行号
-set relativenumber          " 显示相对行号
+"set relativenumber          " 显示相对行号
 set cursorline              " 高亮当前行
 set title                   " 改变终端标题
 set noerrorbells            " 禁止终端蜂鸣
@@ -119,7 +119,23 @@ autocmd InsertLeave * set nopaste
 " 在保存 .vimrc 后自动重新加载
 au BufWritePost .vimrc source $MYVIMRC
 
-map <F1> :set relativenumber!  relativenumber?<cr>
+function! ToggleLineNumbers()
+    if &number && &relativenumber " If both are enabled, switch to only absolute line numbers
+        set norelativenumber
+    elseif &number && !&relativenumber " If only absolute numbers are enabled, turn off all and enable paste mode
+        set nonumber
+        set paste
+    else " If neither are enabled, enable both relative and absolute line numbers, and disable paste mode
+        set number
+        set relativenumber
+        set nopaste
+    endif
+endfunction
+"map <F2> :set relativenumber!  relativenumber?<cr>
+map <F2> :call ToggleLineNumbers()<CR>
+
+
+
 "Use arrow key to change buffer"
 noremap <left> :bp<CR>
 noremap <right> :bn<CR>

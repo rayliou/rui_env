@@ -17,6 +17,12 @@
     scrollback_lines = 50000
     palette = "#000000:#aa0000:#00aa00:#aa5500:#0000aa:#aa00aa:#00aaaa:#aaaaaa:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
     copy_on_selection = True
+  [[Y2]]
+    background_color = "#002b36"
+    foreground_color = "#839496"
+    scrollback_lines = 50000
+    palette = "#000000:#cd0000:#00cd00:#cdcd00:#0000ee:#cd00cd:#00cdcd:#e5e5e5:#7f7f7f:#ff0000:#00ff00:#ffff00:#5c5cff:#ff00ff:#00ffff:#ffffff"
+    copy_on_selection = True
 [layouts]
   [[default]]
     [[[window0]]]
