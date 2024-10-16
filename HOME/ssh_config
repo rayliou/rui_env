@@ -24,7 +24,11 @@ Host 119
   ForwardX11Trusted yes
 
 
-Host 4g
-  HostName host_118
+Host 4g_office
+  HostName 10.0.110.118
+  User buspas
+
+Host 4g_home
+  HostName 20.0.0.118
   User buspas
 
