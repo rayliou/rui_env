@@ -1,6 +1,14 @@
 Host *
  SendEnv TERM
 
+Host gw
+  HostName h.liuxr.net
+  Port 2229
+  User root
+  Compression no
+  ForwardX11 no
+  ForwardX11Trusted no
+
 Host h
   HostName h.liuxr.net
   Port 2231
