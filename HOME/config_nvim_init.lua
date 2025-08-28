@@ -68,7 +68,7 @@ require("lazy").setup({
           },
         },
         {"neovim/nvim-lspconfig", config = function()
-          require("lspconfig").clangd.setup({
+          local clangd_cfg = {
             cmd = {
               "clangd",
               "--background-index",
@@ -78,13 +78,36 @@ require("lazy").setup({
               "--function-arg-placeholders",
               "--fallback-style=llvm",
             },
+            filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
             init_options = {
               usePlaceholders = true,
               completeUnimported = true,
-              clangdFileStatus = true,  
+              clangdFileStatus = true,
             },
+            root_dir = function(fname)
+              local root_file = vim.fs.find(
+                { "compile_commands.json", "compile_flags.txt", ".git" },
+                { path = fname, upward = true }
+              )[1]
+              return root_file and vim.fs.dirname(root_file) or vim.loop.cwd()
+            end,
+          }
+
+          vim.lsp.config["clangd"] = vim.tbl_deep_extend(
+            "force",
+            vim.lsp.config["clangd"] or {},
+            clangd_cfg
+          )
+
+          local group = vim.api.nvim_create_augroup("LspClangdAutoStart", { clear = true })
+          vim.api.nvim_create_autocmd("FileType", {
+            group = group,
+            pattern = clangd_cfg.filetypes,
+            callback = function(event)
+              vim.lsp.start(vim.tbl_deep_extend("force", {}, vim.lsp.config["clangd"], { bufnr = event.buf }))
+            end,
           })
-        end,  
+        end,
         opts = {
             server = {
               clangd = {

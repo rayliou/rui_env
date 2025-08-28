@@ -102,9 +102,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-if [ -f "/opt/python-3.14.0/bin/python3" ]; then
-    export PATH="/opt/python-3.14.0/bin:$PATH"
-fi
+#if [ -f "/opt/python-3.14.0/bin/python3" ]; then
+#    export PATH="/opt/python-3.14.0/bin:$PATH"
+#fi
+source $HOME/py3.12.4/.venv/bin/activate
 
 ###   #### >>> conda initialize >>>
 ###   #### !! Contents within this block are managed by 'conda init' !!
@@ -154,3 +155,4 @@ fi
 export DS63_BUILD_HOST=$HOST_118
 alias j='ssh buspas@10.0.110.6'
 alias 4g='ssh buspas@$HOST_118'
+
