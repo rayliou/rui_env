@@ -59,7 +59,6 @@ set laststatus=2            " 始终显示状态栏
 set statusline=%<%f\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P
 set encoding=utf-8          " 使用 UTF-8 编码
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-set termencoding=utf-8      " 设置终端编码
 set ffs=unix,dos,mac        " 文件格式选择
 
 " 自动命令，启用相对行号的切换
@@ -181,3 +180,4 @@ nnoremap <F4> :E<CR>
 "https://github.com/justinmk/vim-sneak
 let g:sneak#label = 1
 
+set diffopt+=iwhiteall,iblank

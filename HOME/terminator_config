@@ -1,5 +1,6 @@
 [global_config]
   window_state = maximise
+  suppress_multiple_term_dialog = True
   putty_paste_style_source_clipboard = True
 [keybindings]
   go_left = ""

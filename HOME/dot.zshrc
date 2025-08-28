@@ -124,13 +124,17 @@ set -o vi
 alias indent='clang-format -style="{BasedOnStyle: llvm, IndentWidth: 4, BreakBeforeBraces: Custom, BraceWrapping: {AfterClass: true, AfterStruct: true, AfterControlStatement: false, AfterFunction: true, BeforeElse: true}}"'
 #alias fd='fdfind --hidden  --no-ignore'
 alias fd='fdfind --hidden  --no-ignore'
-alias cursor="$HOME/Downloads/Cursor-*.AppImage --no-sandbox"
+export PATH="$HOME/.local/bin:$PATH"
 alias bat='batcat'
 
-
-export XMODIFIERS=@im=fcitx5
-export GTK_IM_MODULE=fcitx5
-export QT_IM_MODULE=fcitx5
+if [[ $(lsb_release -rs) == "20.04" ]]; then
+    FCITX=fcitx
+else
+    FCITX=fcitx5
+fi
+export XMODIFIERS=@im=$FCITX
+export GTK_IM_MODULE=$FCITX
+export QT_IM_MODULE=$FCITX
 
 if ip route | grep -q 10.0.96.0; then # Office
     export HOST_118=10.0.110.118

@@ -43,3 +43,16 @@ Host 4g_home
   HostName 20.0.0.118
   User buspas
 
+Host 87_office
+  HostName 192.168.0.87
+  User buspas
+
+Host 87
+  HostName 87.liuxr.net
+  User buspas
+  ProxyCommand cloudflared access ssh --hostname %h
+  #IdentityFile ~/.ssh/id_ed25519
+
+Host k90
+  HostName 10.0.98.90
+  User buspas
