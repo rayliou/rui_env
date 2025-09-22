@@ -43,6 +43,10 @@ Host 4g_home
   HostName 20.0.0.118
   User buspas
 
+Host 87_office
+  HostName 192.168.0.87
+  User buspas
+
 Host 87
   HostName 87.liuxr.net
   User buspas

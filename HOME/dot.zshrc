@@ -125,6 +125,7 @@ alias indent='clang-format -style="{BasedOnStyle: llvm, IndentWidth: 4, BreakBef
 #alias fd='fdfind --hidden  --no-ignore'
 alias fd='fdfind --hidden  --no-ignore'
 alias cursor="$HOME/Downloads/Cursor-*.AppImage --no-sandbox"
+export PATH="$HOME/.local/bin:$PATH"
 alias bat='batcat'
 
 
