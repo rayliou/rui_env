@@ -4,7 +4,8 @@ all:ssh \
 	$(HOME)/.zshrc \
 	$(HOME)/.config/nvim/init.lua \
 	$(HOME)/.tmux.conf \
-	$(HOME)/.config/terminator/config
+	$(HOME)/.config/terminator/config \
+	$(HOME)/.config/uv/config.toml
 
 ssh: $(HOME)/.ssh/authorized_keys $(HOME)/.ssh/config
 
@@ -25,4 +26,8 @@ $(HOME)/.config/terminator/config:$(HOME)/g/rui_env/HOME/terminator_config
 
 $(HOME)/.config/nvim/init.lua:$(HOME)/g/rui_env/HOME/config_nvim_init.lua
 	mkdir -p $(HOME)/.config/nvim
+	rm -vf $@ && ln -sf  $< $@
+
+$(HOME)/.config/uv/config.toml:$(HOME)/g/rui_env/HOME/config_uv_config.toml
+	mkdir -p $(HOME)/.config/uv
 	rm -vf $@ && ln -sf  $< $@
