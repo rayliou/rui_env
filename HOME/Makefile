@@ -7,7 +7,8 @@ all:ssh \
 	$(HOME)/.config/terminator/config \
 	$(HOME)/.config/uv/config.toml
 
-ssh: $(HOME)/.ssh/authorized_keys $(HOME)/.ssh/config
+#ssh: $(HOME)/.ssh/authorized_keys $(HOME)/.ssh/config
+ssh: $(HOME)/.ssh/config
 
 $(HOME)/.vimrc:$(HOME)/g/rui_env/HOME/dot.vimrc 
 	rm -vf $@ && ln -sf  $< $@
