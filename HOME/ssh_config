@@ -43,6 +43,14 @@ Host 4g_home
   HostName 20.0.0.118
   User buspas
 
+Host 55
+  HostName bp3234310055
+  User buspas
+
+Host 61
+  HostName bp3235300061
+  User buspas
+
 Host 87_office
   HostName 192.168.0.87
   User buspas
@@ -73,6 +81,11 @@ Host 87
 Host o-c
     HostName ssh-b.liuxr.net
     User lxr
+    ProxyCommand cloudflared access ssh --hostname %h
+
+Host openwrt
+    HostName openwrt-ssh.liuxr.net
+    User root
     ProxyCommand cloudflared access ssh --hostname %h
 
 Host k90
