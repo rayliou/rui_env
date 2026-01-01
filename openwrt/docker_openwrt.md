@@ -1,4 +1,7 @@
 
+- OpenWrt 私有 Docker Registry 快速指南
+- OpenWrt + Docker 无法出网
+
 # OpenWrt 私有 Docker Registry 快速指南
 
 **（SSD 存储 + Docker data-root 迁移 + htpasswd 认证）**
@@ -208,5 +211,152 @@ SSD (/mnt/SSD)
 * 多 Registry（dev / prod）
 * Edge 设备批量拉取优化
 
-如果你愿意，我可以帮你把这份内容 **整理成一页 README.md 或 Wiki 标准文档**，直接能进仓库用。
+
+下面是**收官版 · OpenWrt 上 Docker 无法访问互联网的「极简 Quick Fix / Cheat Sheet」**。
+**只写最终成功的方法，不绕路，不讲试错历史。**
+
+---
+
+# OpenWrt + Docker 无法出网
+
+## 极简 Quick Fix（fw4 / nftables）
+
+### 适用前提
+
+* OpenWrt **22.03+ / 23.x / 24.x**
+* 使用 **fw4（nftables）**
+* Docker 使用默认 bridge（`docker0`, 172.17.0.0/16）
+* 现象：
+
+  * 容器内 `ping 1.1.1.1` 不通
+  * 宿主机网络正常
+  * `iptables` 看着像放行，但实际不通
+
+---
+
+## 核心结论（一句话）
+
+> **fw4 的 forward 链默认是 DROP，
+> Docker 即使有 zone，没有 `docker → wan` 的 forwarding，也会被直接 REJECT。**
+
+---
+
+## 最小正确修复步骤（只做这几步）
+
+### 1️⃣ 确保 Docker 有自己的 zone（通常已经有）
+
+```sh
+uci show firewall | grep firewall.docker=zone
+```
+
+应看到类似：
+
+```text
+firewall.docker=zone
+firewall.docker.name='docker'
+firewall.docker.network='docker'
+firewall.docker.input='ACCEPT'
+firewall.docker.output='ACCEPT'
+firewall.docker.forward='ACCEPT'
+```
+
+> 如果没有 docker zone，再补；**大多数 Docker 安装已自动创建**。
+
+---
+
+### 2️⃣ 关键一步：添加 **docker → wan forwarding**
+
+```sh
+sec="$(uci add firewall forwarding)"
+uci set firewall."$sec".src='docker'
+uci set firewall."$sec".dest='wan'
+uci rename firewall."$sec"='docker2wan'
+uci commit firewall
+/etc/init.d/firewall restart
+```
+
+**这一步就是“解药”**。
+
+---
+
+### 3️⃣ 确保 WAN 开启了 NAT（一般默认已开）
+
+```sh
+uci show firewall.wan | grep masq
+```
+
+应为：
+
+```text
+firewall.wan.masq='1'
+```
+
+如果没有：
+
+```sh
+uci set firewall.wan.masq='1'
+uci commit firewall
+/etc/init.d/firewall restart
+```
+
+---
+
+### 4️⃣ 清理无效 forwarding（如果 fw4 报错）
+
+若重启防火墙时看到：
+
+```text
+option 'src' is mandatory but not set
+```
+
+说明有**残缺 forwarding**，删掉即可：
+
+```sh
+uci show firewall | grep "=forwarding"
+uci delete firewall.<无 src/dest 的那条>
+uci commit firewall
+/etc/init.d/firewall restart
+```
+
+---
+
+## 快速验证（10 秒）
+
+```sh
+docker exec -it <container> ping -c 3 1.1.1.1
+docker exec -it <container> wget -qO- http://example.com | head
+```
+
+两条都成功 → **问题收官**。
+
+---
+
+## 必须记住的 3 条原则（避免以后再踩坑）
+
+1. **OpenWrt 用的是 fw4 / nftables，不是 iptables**
+
+   * 改 iptables ≠ 生效
+   * 一切以 `/etc/config/firewall` 为准
+
+2. **zone ≠ 能出网**
+
+   * 必须有明确的 `forwarding src → dest`
+   * fw4 的 `forward` 默认 policy 是 **DROP**
+
+3. **Docker 出网 = 两件事**
+
+   * `docker → wan forwarding`
+   * `wan masq = 1`
+
+---
+
+## 一句话版本（可以贴在 Wiki 里）
+
+> **在 OpenWrt 上，Docker 不能上网，
+> 99% 是因为 fw4 没有 `docker → wan` forwarding。
+> 加一条 forwarding，重启 firewall，立刻解决。**
+
+
+
+
 
